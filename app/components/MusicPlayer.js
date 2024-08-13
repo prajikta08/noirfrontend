@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState, useRef, useEffect } from 'react';
 
 const MusicPlayer = ({ tracks, isCollapsed, toggleCollapse }) => {
@@ -42,6 +43,73 @@ const MusicPlayer = ({ tracks, isCollapsed, toggleCollapse }) => {
     if (audio) {
       if (isPlaying) {
         audio.pause();
+=======
+import React, { useState, useRef, useEffect } from "react";
+import Button from "@mui/material/Button";
+
+function MusicPlayer({ tracks }) {
+  const [music, setMusic] = useState({
+    name: "Noir soul syndicate music player",
+    artistName: "click on songs to play",
+    img: "/logo.png",
+    musicUrl: "#",
+  });
+
+  const audioElement = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [seekTime, setSeekTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [currTime, setCurrTime] = useState(0);
+  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
+
+  useEffect(() => {
+    if (tracks.length > 0) {
+      setMusic({
+        name: tracks[currentTrackIndex].title,
+        artistName: tracks[currentTrackIndex].artist,
+        img: tracks[currentTrackIndex].img,
+        musicUrl: tracks[currentTrackIndex].src,
+      });
+    }
+  }, [tracks, currentTrackIndex]);
+
+  useEffect(() => {
+    if (audioElement.current) {
+      audioElement.current.onloadedmetadata = () => {
+        setDuration(audioElement.current.duration);
+      };
+
+      audioElement.current.ontimeupdate = () => {
+        if (audioElement.current) {
+          setCurrTime(audioElement.current.currentTime);
+          setSeekTime((audioElement.current.currentTime / duration) * 100);
+        }
+      };
+
+      audioElement.current.onended = () => {
+        handleNextTrack();
+      };
+
+      if (music.musicUrl && audioElement.current.src !== music.musicUrl) {
+        audioElement.current.src = music.musicUrl;
+        if (isPlaying) {
+          audioElement.current.play();
+        }
+      }
+    }
+
+    return () => {
+      if (audioElement.current) {
+        audioElement.current.pause();
+      }
+    };
+  }, [music.musicUrl, duration]);
+
+  const handlePlayPause = () => {
+    if (audioElement.current) {
+      if (!isPlaying) {
+        audioElement.current.play();
+>>>>>>> 72b3c04d7170d21bb950f3a0637542ce90e23bb2
       } else {
         const playPromise = audio.play();
         if (playPromise !== undefined) {
@@ -52,6 +120,7 @@ const MusicPlayer = ({ tracks, isCollapsed, toggleCollapse }) => {
     }
   };
 
+<<<<<<< HEAD
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60);
@@ -66,44 +135,35 @@ const MusicPlayer = ({ tracks, isCollapsed, toggleCollapse }) => {
   const previousTrack = () => {
     setCurrentTrackIndex((prevIndex) => (prevIndex - 1 + tracks.length) % tracks.length);
     setIsPlaying(true); // Auto play previous track
+=======
+  const handleSeekChange = (event) => {
+    const newValue = event.target.value;
+    if (audioElement.current) {
+      audioElement.current.currentTime = (newValue * duration) / 100;
+    }
+    setSeekTime(newValue);
+  };
+
+  const handleNextTrack = () => {
+    const nextTrackIndex = (currentTrackIndex + 1) % tracks.length;
+    setCurrentTrackIndex(nextTrackIndex);
+  };
+
+  const formatTime = (secs) => {
+    const minutes = Math.floor(secs / 60);
+    const seconds = Math.floor(secs % 60);
+    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+>>>>>>> 72b3c04d7170d21bb950f3a0637542ce90e23bb2
   };
 
   return (
-    <div className={`fixed bottom-0 w-full bg-black text-white p-4 flex items-center justify-between shadow-lg ${isCollapsed ? 'hidden' : 'flex'}`}>
+    <div className="fixed bottom-0 w-full bg-black text-white p-4 flex items-center justify-between shadow-lg">
       <div className="flex items-center">
         <img src={music.img} alt={music.name} className="w-12 h-12 mr-4" />
         <div>
           <div className="text-lg">{music.name}</div>
           <div className="text-sm text-gray-400">{music.artistName}</div>
         </div>
-        {!isLiked ? (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="18"
-            height="18"
-            fill="currentColor"
-            viewBox="0 0 16 16"
-            className="text-white cursor-pointer ml-4 bi bi-heart"
-            onClick={toggleLiked}
-          >
-            <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
-          </svg>
-        ) : (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="18"
-            height="18"
-            fill="currentColor"
-            viewBox="0 0 16 16"
-            className="text-yellow-600 cursor-pointer ml-4 bi bi-heart-fill"
-            onClick={toggleLiked}
-          >
-            <path
-              fillRule="evenodd"
-              d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"
-            />
-          </svg>
-        )}
       </div>
 
       <div className="flex items-center">
@@ -142,7 +202,7 @@ const MusicPlayer = ({ tracks, isCollapsed, toggleCollapse }) => {
           max="100"
           value={seekTime}
           onChange={handleSeekChange}
-          className="w-52 mx-2 cursor-pointer text-red-500"
+          className="w-52 mx-2 cursor-pointer"
         />
 
         <div className="text-sm">
@@ -152,24 +212,8 @@ const MusicPlayer = ({ tracks, isCollapsed, toggleCollapse }) => {
       </div>
 
       <div>
-        <Button
-          variant="contained"
-          color="primary"
-          className="flex items-center space-x-2"
-          href={music.musicUrl}
-          download
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="18"
-            height="18"
-            fill="currentColor"
-            className="bi bi-download"
-            viewBox="0 0 16 16"
-          >
-            <path d="M.5 9.9a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 1 0v4a1.5 1.5 0 0 1-1.5 1.5H1a1.5 1.5 0 0 1-1.5-1.5v-4a.5.5 0 0 1 .5-.5Zm8.5 2.1a.5.5 0 0 0-.5.5v2H7v-2a.5.5 0 0 0-.5-.5H5.707l1.647-1.646a.5.5 0 0 1 .707 0L9.707 12H8.5Zm4.854 2.854a.5.5 0 0 0-.708 0L10 17.5a.5.5 0 0 0 0 .707l1.646 1.646a.5.5 0 0 0 .708-.707L10.707 18l2.147-2.147a.5.5 0 0 0 0-.708Z" />
-          </svg>
-          <span className="hidden md:inline-block">Download</span>
+        <Button variant="contained" color="primary" href={music.musicUrl} download>
+          Download
         </Button>
       </div>
 
@@ -179,3 +223,4 @@ const MusicPlayer = ({ tracks, isCollapsed, toggleCollapse }) => {
 };
 
 export default MusicPlayer;
+

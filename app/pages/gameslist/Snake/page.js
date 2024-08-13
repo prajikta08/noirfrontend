@@ -4,8 +4,12 @@ import React, { useState, useEffect } from 'react';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import Cookies from 'js-cookie';
+<<<<<<< HEAD
 import dynamic from  "next/dynamic";
 import MusicPlayer from '../../../components/MusicPlayer';
+=======
+import dynamic from 'next/dynamic';
+>>>>>>> 72b3c04d7170d21bb950f3a0637542ce90e23bb2
 
 const MusicPlayer = dynamic(() => import("../../../components/MusicPlayer"), {
   ssr: false,
@@ -13,17 +17,39 @@ const MusicPlayer = dynamic(() => import("../../../components/MusicPlayer"), {
 
 
 const tracks = [
-  { src: '/music/2_Ciphers.mp3', title: '2_Ciphers' },
-  { src: '/music/Decentralization.mp3', title: 'Decentralization' },
-  { src: '/music/Digital_Revolution.mp3', title: 'Digital_Revolution' },
-  { src: '/music/Game_On.mp3', title: 'Game_on' }
+  {
+    title: '2_Ciphers',
+    artist: 'FN Fenti®',
+    img: '/mus.jpg',
+    src: '/music/2_Ciphers.mp3',
+  },{
+    title: 'Decentralization',
+    artist: 'FN Fenti®',
+    img: '/mus.jpg',
+    src: '/music/Decentralization.mp3',
+  },
+  {
+    title: 'Digital_Revolution',
+    artist: 'FN Fenti®',
+    img: '/mus.jpg',
+    src: '/music/Digital_Revolution.mp3',
+  },
+  {
+    title: 'Game_On',
+    artist: 'FN Fenti®',
+    img: '/mus.jpg',
+    src: '/music/Game_On.mp3',
+  },
 ];
+
+const MusicPlayer = dynamic(() => import("../../../components/MusicPlayer"), {
+  ssr: false,
+});
 
 const Game = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
-
-  const submitScore = async (score,gameId) => {
+  const submitScore = async (score, gameId) => {
     console.log('Submitting score:', score);
     const token = Cookies.get('token');
     try {
@@ -34,7 +60,7 @@ const Game = () => {
           'Authorization': `Bearer ${token.trim()}`,
         },
         credentials: 'include',
-        body: JSON.stringify({ score:score,gameId:gameId }),
+        body: JSON.stringify({ score: score, gameId: gameId }),
       });
 
       if (response.ok) {
@@ -49,12 +75,12 @@ const Game = () => {
 
   useEffect(() => {
     const handleMessage = (event) => {
-      const gameId =2;
+      const gameId = 2;
       if (event.origin !== 'https://zorro-psycho.github.io') return;
 
       console.log('Message received from iframe:', event.data);
       if (event.data.type === 'submit-score' && typeof event.data.score === 'number') {
-        submitScore(event.data.score,gameId);
+        submitScore(event.data.score, gameId);
       } else {
         console.error('Invalid message format or missing score:', event.data);
       }
@@ -71,13 +97,13 @@ const Game = () => {
     setIsCollapsed(!isCollapsed); // Toggles the collapsed state
   };
 
-
   return (
-    <div className="min-h-screen bg-gradient-to-r from-green-400 to-blue-500 text-white">
+    <div className="min-h-screen bg-gradient-to-r from-green-400 to-blue-500 text-white flex flex-col justify-between">
       <Header />
-      <main className="flex flex-col items-center justify-center py-20">
+      <main className="flex flex-col items-center justify-center py-20 flex-grow">
         <h1 className="text-5xl font-bold mb-10">Snake Game</h1>
         <div className="flex flex-grow">
+<<<<<<< HEAD
         <iframe
           src="https://zorro-psycho.github.io/snake/"
           width="800"
@@ -95,21 +121,33 @@ const Game = () => {
         }}
       >
       </div>
+=======
+          <iframe
+            src="https://zorro-psycho.github.io/snake/"
+            width="800"
+            height="600"
+            title="Snake Game"
+            sandbox="allow-scripts allow-same-origin"
+            className="border-4 border-green-400 rounded-lg shadow-lg flex flex-grow items-center justify-center"
+          ></iframe>
+>>>>>>> 72b3c04d7170d21bb950f3a0637542ce90e23bb2
         </div>
-       
-
-        </div>
-        
         <div className="mt-10 text-center">
           <p className="text-lg">
             Enjoy the classic Snake Game! Use the arrow keys to move and try to eat the food without crashing into the walls or yourself.
           </p>
         </div>
       </main>
-      
       <Footer />
+<<<<<<< HEAD
       <div 
         className={`fixed bottom-0 left-0 w-full ${isCollapsed ? "hidden md:flex" : "flex" }`}
+=======
+      <div
+        className={`fixed bottom-0 left-0 w-full ${
+          isCollapsed ? "hidden md:flex" : "flex"
+        }`}
+>>>>>>> 72b3c04d7170d21bb950f3a0637542ce90e23bb2
       >
         <MusicPlayer
           tracks={tracks}
