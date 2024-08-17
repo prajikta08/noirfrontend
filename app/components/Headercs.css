@@ -6,7 +6,11 @@
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem;
+<<<<<<< HEAD
   background-color: rgb(31 41 55);
+=======
+  background-color: #1a1a1a; /* Gray-900 equivalent */
+>>>>>>> upstream/main
   position: relative;
 }
 
@@ -99,7 +103,10 @@
   list-style: none; /* Remove default list styles */
   padding: 0; /* Remove default padding */
   margin: 0; /* Remove default margin */
+<<<<<<< HEAD
   width: 160px;
+=======
+>>>>>>> upstream/main
 }
 
 .group:hover .dropdown {
@@ -126,6 +133,7 @@
   background-color: #555; /* Background color on hover */
 }
 
+<<<<<<< HEAD
 .nav-menu ul li a {
   color: white; /* Default text color */
   background-color: transparent; /* Default background color */
@@ -138,6 +146,8 @@
   background-color: #333; /* Background color on hover and active state */
 }
 
+=======
+>>>>>>> upstream/main
 
 
 
@@ -150,7 +160,10 @@
   text-decoration: none;
   background-color: #2d2d2d; /* Gray-800 equivalent */
   transition: background-color 0.3s ease;
+<<<<<<< HEAD
   
+=======
+>>>>>>> upstream/main
 }
 
 .dropdown a:hover {
