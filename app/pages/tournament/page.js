@@ -1,4 +1,4 @@
-import Header from '@/app/components/Header'; // Adjust the import path as per your project structure
+ import Header from '@/app/components/Header'; // Adjust the import path as per your project structure
 import Footer from '@/app/components/Footer'; // Import Footer component if needed
 
 const tournamentsData = [
